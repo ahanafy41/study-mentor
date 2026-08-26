@@ -1,0 +1,36 @@
+name: Validate Skill & Templates
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check Required Files
+        run: |
+          echo "Checking essential repository files..."
+          test -f SKILL.md || { echo "SKILL.md missing"; exit 1; }
+          test -f README.md || { echo "README.md missing"; exit 1; }
+          test -f LICENSE || { echo "LICENSE missing"; exit 1; }
+          test -f AGENT_GUIDE.md || { echo "AGENT_GUIDE.md missing"; exit 1; }
+          test -d templates || { echo "templates directory missing"; exit 1; }
+          echo "All essential files are present."
+
+      - name: Validate SKILL.md Structure & Frontmatter
+        run: |
+          head -n 1 SKILL.md | grep -q "^---" || { echo "SKILL.md missing opening YAML frontmatter ---"; exit 1; }
+          grep -q "^name: study-mentor" SKILL.md || { echo "SKILL.md missing name attribute"; exit 1; }
+          grep -q "^description:" SKILL.md || { echo "SKILL.md missing description attribute"; exit 1; }
+          echo "SKILL.md frontmatter validated."

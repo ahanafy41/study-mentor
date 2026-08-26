@@ -1,0 +1,67 @@
+name: Release & Package Skill
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g. v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Release Version
+        id: get_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          fi
+
+      - name: Validate SKILL.md
+        run: |
+          if [ ! -f "SKILL.md" ]; then
+            echo "Error: SKILL.md is missing!"
+            exit 1
+          fi
+          echo "SKILL.md verified successfully."
+
+      - name: Package Skill Bundle
+        run: |
+          PACKAGE_NAME="study-mentor-${{ env.VERSION }}.zip"
+          zip -r "$PACKAGE_NAME" SKILL.md README.md AGENT_GUIDE.md LICENSE templates/
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Study Mentor Release ${{ env.VERSION }}
+          body: |
+            ## Study Mentor Release ${{ env.VERSION }} 🎓
+
+            ### What's New
+            - Official release of the **Study Mentor** AI skill package.
+            - Universal pedagogical curriculum architecture across all disciplines.
+            - Age-adaptive pedagogy and Feynman technique analogies.
+            - Mandatory parallel subagent delegation framework.
+            - Comprehensive workspace scaffolding templates (`roadmap.md`, `progress.md`, `concepts.md`, `lectures/`, `exercises/`).
+            - Built-in GitHub Actions CI/CD workflows for validation and packaging.
+
+            ### Package Assets
+            - Complete skill bundle: `${{ env.PACKAGE_NAME }}`
+          files: ${{ env.PACKAGE_NAME }}
+          draft: false
+          prerelease: false
