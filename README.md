@@ -1,9 +1,7 @@
 # Study Mentor 🎓
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/ahanafy41/study-mentor/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/ahanafy41/study-mentor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GitHub Actions CI](https://github.com/ahanafy41/study-mentor/actions/workflows/validate-skill.yml/badge.svg)](https://github.com/ahanafy41/study-mentor/actions/workflows/validate-skill.yml)
-[![Release Workflow](https://github.com/ahanafy41/study-mentor/actions/workflows/release.yml/badge.svg)](https://github.com/ahanafy41/study-mentor/actions/workflows/release.yml)
 
 > **Universal pedagogical mentor and curriculum architect across all disciplines with age-adaptive pedagogy, structured lecture notes, verified exercises, and active recall tracking.**
 >
@@ -22,7 +20,6 @@
 - ⚡ **Mandatory Multi-Branch Subagent Architecture**: Enforces parallel subagent delegation for research, lecture writing, source verification, and exercise creation.
 - 📁 **File-Backed Workspace Persistence**: Organizes every study topic into a structured `learn_<topic_name>/` folder with syllabi, deep lectures, glossaries, and active recall schedules.
 - 🔄 **Socratic Active Recall & Spaced Repetition**: Integrates interactive review intervals (24h, 3d, 1w) to guarantee long-term knowledge retention.
-- 🚀 **GitHub Actions Automated Pipeline**: Built-in CI/CD for skill validation, release packaging, and tag-triggered GitHub Releases.
 
 ---
 
@@ -30,20 +27,9 @@
 
 ```text
 ahanafy41/study-mentor/
-├── .github/
-│   └── workflows/
-│       ├── release.yml           # Automated release workflow (v1.0.0+)
-│       └── validate-skill.yml    # CI workflow for SKILL validation & linting
-├── templates/                    # Workspace scaffolding templates
-│   ├── roadmap_template.md       # Syllabus & module tracker template
-│   ├── progress_template.md      # Session log & active recall tracker template
-│   ├── concepts_template.md      # Master glossary & concepts index template
-│   ├── lecture_template.md       # Exhaustive lecture note blueprint
-│   └── exercise_template.md      # Tiered exercises & lab drill template
-├── AGENT_GUIDE.md                # In-depth execution guide for AI agents
-├── LICENSE                       # MIT License
-├── README.md                     # Main project documentation & connection to SKILL.md
-└── SKILL.md                      # Core Skill definition file
+├── LICENSE          # MIT License
+├── README.md        # Documentation & connection to SKILL.md
+└── SKILL.md         # Core Skill definition file
 ```
 
 ---
@@ -95,7 +81,7 @@ learn_<topic_name>/
    ```
 
 2. **Load the Skill**:
-   Import `SKILL.md` into your agent environment or skills registry.
+   Import [SKILL.md](SKILL.md) into your agent environment or skills registry.
 
 3. **Triggering the Mentor**:
    Start a learning session with a prompt like:
@@ -105,22 +91,12 @@ learn_<topic_name>/
 
 ---
 
-## 🤖 GitHub Actions CI/CD Pipeline
-
-This repository includes two GitHub Actions workflows:
-
-1. **[validate-skill.yml](.github/workflows/validate-skill.yml)**: Validates YAML frontmatter, Markdown formatting, and template file integrity on every push and pull request.
-2. **[release.yml](.github/workflows/release.yml)**: Automatically packages the release archive (`study-mentor-v1.0.0.zip`), extracts changelogs, and creates a tagged GitHub Release when a tag like `v1.0.0` is pushed.
-
----
-
 ## 📜 Version History / سجل الإصدارات
 
 - **v1.0.0** (2026-08-26):
-  - Initial public release of the **Study Mentor** skill package.
+  - Official release of the **Study Mentor** skill.
   - Complete integration of age-adaptive pedagogical frameworks and Feynman analogies.
-  - Modular workspace scaffold templates (`roadmap`, `progress`, `concepts`, `lectures`, `exercises`).
-  - Automated GitHub Actions release and verification workflows.
+  - Modular workspace scaffold architecture (`roadmap`, `progress`, `concepts`, `lectures`, `exercises`).
 
 ---
 
@@ -128,4 +104,4 @@ This repository includes two GitHub Actions workflows:
 
 This project is licensed under the [MIT License](LICENSE) - see the [LICENSE](LICENSE) file for details.
 
-Developed with ❤️ by [Ahmed Hanafy](https://github.com/ahanafy41).
+Developed by [Ahmed Hanafy](https://github.com/ahanafy41).
