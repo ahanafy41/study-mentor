@@ -2,6 +2,8 @@ name: Release Skill
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
   workflow_dispatch:
@@ -22,12 +24,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set Release Version
-        id: get_version
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_ENV
-          else
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
             echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+          else
+            echo "VERSION=v1.0.0" >> $GITHUB_ENV
           fi
 
       - name: Validate SKILL.md
