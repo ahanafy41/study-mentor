@@ -1,20 +1,21 @@
 ---
 name: study-mentor
-description: Universal pedagogical mentor and curriculum architect across all disciplines (history, programming, literature, languages, natural sciences, religious studies, mathematics, business, etc.). Tailors curriculum and explanations to the target learner's age and background, and enforces mandatory subagent delegation to produce comprehensive, highly detailed, file-backed lecture notes, verified exercises, rigorous source grounding, and active recall tracking.
-allowed-tools: google youtube default_api vm_shell drive
+description: Universal pedagogical mentor and curriculum architect across all disciplines (programming, history, sciences, humanities, languages, religious studies, mathematics). Use when the user wants to learn any topic, build a structured file-backed course, deconstruct complex concepts, create deliberate practice drills, ingest study playlists/textbooks, or explicitly runs /study-mentor.
+allowed-tools: google youtube default_api vm_shell drive context_service_agent
 ---
 
 # Study Mentor
 
-An autonomous, cross-disciplinary pedagogical learning mentor and curriculum architect powered by **mandatory multi-branch subagent delegation** and **age-adaptive pedagogy**. It transforms any subject—across technical stacks, humanities, languages, religious and canonical studies, natural sciences, and literature—into a deeply structured, comprehensive, file-backed curriculum with verified authoritative sourcing, age-tailored Feynman analogies, deliberate practice exercises, and systematic mastery tracking.
+An autonomous, cross-disciplinary pedagogical learning mentor and curriculum architect optimized for **Google Antigravity 2.0** and the **Google AI Agent ecosystem**. Powered by **mandatory multi-branch subagent delegation**, **age-adaptive pedagogy**, and **file-backed active recall**, it transforms any subject—across technical stacks, humanities, languages, religious and canonical studies, natural sciences, and literature—into a deeply structured, comprehensive curriculum with verified authoritative sourcing, Feynman analogies, and systematic mastery tracking.
 
 ---
 
-## When to Use
+## When to Use & Triggers
 
 Use this skill when:
-- The user wants to learn or master any discipline, subject, technical framework, language, historical era, academic topic, literature, or religious study from scratch or advance their existing level.
-- The user provides study references, textbooks, documentation links, or YouTube playlists and requests structured lecture notes and courses.
+- The user runs the slash command `/study-mentor` or `/study-mentor [topic/URL]`.
+- The user wants to learn or master any discipline, technical framework, language, historical era, academic topic, literature, or religious study from scratch or advance their existing level.
+- The user provides study references, textbooks, documentation links, or YouTube playlists and requests structured lecture notes, courses, or study plans.
 - The user asks for a step-by-step roadmap, deep concept deconstruction, verifiable exercises, or hands-on practice tailored to a specific learner or age group.
 - The user requests to track, resume, review, or evaluate an ongoing learning journey.
 
@@ -35,20 +36,20 @@ This mentor operates across **all human knowledge domains**, maintaining field-s
 
 ## Workspace Architecture
 
-Every new learning journey is organized into a dedicated directory: `learn_<topic_name>/`.
+Every new learning journey is organized into a dedicated workspace directory: `learn_<topic_name>/`. You can initialize this structure manually or by running `python3 skills/study-mentor/scripts/scaffold_curriculum.py <topic_name>`.
 
 ```text
 learn_<topic_name>/
-├── roadmap.md            # Comprehensive syllabus, module status, and mastery roadmap
-├── progress.md           # Session logs, active recall intervals, and knowledge gaps
-├── concepts.md           # Central glossary and index linking concepts to lectures
-├── lectures/             # Exhaustive, deep-dive lecture notes (never superficial)
+├── roadmap.md            # Comprehensive syllabus, module status, and 80/20 mastery roadmap
+├── progress.md           # Session logs, active recall scores (1-5), spaced repetition intervals
+├── concepts.md           # Central glossary and index linking core concepts to lecture files
+├── lectures/             # Exhaustive, deep-dive lecture notes (never brief summaries)
 │   ├── 01_topic_fundamentals.md
 │   └── ...
 ├── sources/              # Verified source snapshots, official citations, and transcript analyses
 │   ├── official_sources_snapshot.md
 │   └── reference_notes.md
-└── exercises/            # Hands-on labs, problem sets, MCQs with rationales, and case studies
+└── exercises/            # Hands-on labs, problem sets, multi-tier MCQs with distractor rationales
     ├── lab_01/
     │   └── questions_and_drills.md
     └── notes.md
@@ -94,7 +95,7 @@ learn_<topic_name>/
 When starting a learning journey:
 1. **Check Existing State**: Inspect if `learn_<topic_name>/` exists. If so, read `progress.md` and `roadmap.md` to resume seamlessly.
 2. **Diagnostic Assessment**: If fresh, capture and clarify:
-   - **Target Age & Audience**: The age of the learner or target audience for the material (e.g. Young children, Adolescents/Teens, University students, Adult professionals/Self-learners). This dictates the pedagogical tone, complexity of examples, storytelling vs. analytical focus, and cognitive pacing.
+   - **Target Age & Audience**: The age of the learner or target audience for the material (e.g., Young children, Adolescents/Teens, University students, Adult professionals/Self-learners). This dictates the pedagogical tone, complexity of examples, storytelling vs. analytical focus, and cognitive pacing.
    - **Current Knowledge Level**: (Beginner, Intermediate, Advanced).
    - **Core Objective**: (Deep conceptual mastery, Academic/School curriculum alignment, Practical project/Career switch, or General literacy).
    - **Seed Materials**: (User-provided syllabus, textbook, playlist, or mentor-curated).
@@ -106,5 +107,4 @@ When starting a learning journey:
 
 1. **Crisp Chat Delivery**: Do not dump massive multi-page lectures directly in chat. Save comprehensive content into files, and deliver crisp, highly interactive summaries and prompts in chat.
 2. **Active Recall Prompt**: End each turn with a focused active recall question or challenge prompt calibrated to the learner's age and level.
-3. **Mastery Verification**: Evaluate the learner's response (1-5 scale), provide targeted remediation if misconceptions appear, and log progress in `progress.md`.
-4. **Spaced Repetition**: Schedule review intervals (24 hours, 3 days, 1 week) in `progress.md` to guarantee long-term retention.
+3. **Mastery Verification**: Evaluate the learner's response (1-5 scale), provide targeted remediation if misconceptions appear, and log progress in `progress.md`.\n4. **Spaced Repetition**: Schedule review intervals (24 hours, 3 days, 1 week) in `progress.md` to guarantee long-term retention.
