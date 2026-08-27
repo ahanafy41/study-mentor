@@ -1,0 +1,36 @@
+name: Validate Skill & Structure
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check Required Files
+        run: |
+          echo "Checking essential repository files..."
+          test -f SKILL.md || { echo "SKILL.md missing"; exit 1; }
+          test -f README.md || { echo "README.md missing"; exit 1; }
+          test -f LICENSE || { echo "LICENSE missing"; exit 1; }
+          test -f scripts/scaffold_curriculum.py || { echo "scripts/scaffold_curriculum.py missing"; exit 1; }
+          test -f references/pedagogy_and_evaluation.md || { echo "references/pedagogy_and_evaluation.md missing"; exit 1; }
+          echo "All essential files are present."
+
+      - name: Validate SKILL.md Structure & Frontmatter
+        run: |
+          head -n 1 SKILL.md | grep -q "^---" || { echo "SKILL.md missing opening YAML frontmatter ---"; exit 1; }
+          grep -q "^name: study-mentor" SKILL.md || { echo "SKILL.md missing name attribute"; exit 1; }
+          grep -q "^description:" SKILL.md || { echo "SKILL.md missing description attribute"; exit 1; }
+          echo "SKILL.md frontmatter validated."

@@ -9,9 +9,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Release version (e.g. v1.0.0)'
+        description: 'Release version (e.g. v1.1.0)'
         required: true
-        default: 'v1.0.0'
+        default: 'v1.1.0'
 
 permissions:
   contents: write
@@ -30,7 +30,7 @@ jobs:
           elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
             echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           else
-            echo "VERSION=v1.0.0" >> $GITHUB_ENV
+            echo "VERSION=v1.1.0" >> $GITHUB_ENV
           fi
 
       - name: Validate SKILL.md
@@ -44,23 +44,22 @@ jobs:
       - name: Package Skill Bundle
         run: |
           PACKAGE_NAME="study-mentor-${{ env.VERSION }}.zip"
-          zip -r "$PACKAGE_NAME" SKILL.md README.md LICENSE
+          zip -r "$PACKAGE_NAME" SKILL.md README.md LICENSE scripts/ references/
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.VERSION }}
-          name: Study Mentor Release ${{ env.VERSION }}
+          name: Study Mentor Release ${{ env.VERSION }} 🎓
           body: |
             ## Study Mentor Release ${{ env.VERSION }} 🎓
 
-            ### Description
-            Official release of the **Study Mentor** AI skill package.
-            - Universal pedagogical curriculum architecture across all disciplines.
-            - Age-adaptive pedagogy and Feynman technique analogies.
-            - Mandatory parallel subagent delegation framework.
-            - Clean file-backed workspace persistence.
+            ### What's New in v1.1.0
+            - **Google Antigravity 2.0 & AI Agent Ecosystem Optimization**: Full alignment with progressive disclosure discovery, activation, and execution lifecycles.
+            - **Expanded Multi-File Architecture**: Added dedicated directory layout with `scripts/scaffold_curriculum.py` and `references/pedagogy_and_evaluation.md`.
+            - **Subagent Delegation Protocols**: Calibrated for parallel execution across theory deconstruction, live LTS verification, deliberate practice drills, and media ingestion.
+            - **Preserved Core Features**: Retained universal multi-discipline coverage, age-adaptive pedagogy, Feynman mental models, and structured file-backed workspace persistence.
 
             ### Package Assets
             - Complete skill bundle: `${{ env.PACKAGE_NAME }}`
